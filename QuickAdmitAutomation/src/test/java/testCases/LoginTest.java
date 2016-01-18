@@ -3,17 +3,13 @@ package testCases;
 import java.util.concurrent.TimeUnit;
 
 import pageObjects.LoginPage;
+import utilities.BrowserFactory;
 
 import org.openqa.selenium.WebDriver;
-
 import org.openqa.selenium.firefox.FirefoxDriver;
-
 import org.openqa.selenium.support.PageFactory;
-
 import org.testng.annotations.Test;
-
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.AfterMethod;
 
 public class LoginTest {
@@ -25,7 +21,7 @@ public class LoginTest {
 
 	public void beforeMethod() {
 
-		driver = new FirefoxDriver();
+		driver = BrowserFactory.getBrowser("IE");
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
