@@ -2,6 +2,7 @@ package testCases;
 
 import java.util.concurrent.TimeUnit;
 
+import pageObjects.ChangePasswordPage;
 import pageObjects.LoginPage;
 import utilities.BrowserFactory;
 
@@ -12,10 +13,12 @@ import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 
-public class LoginTest {
+public class ActivityTest {
 
 	static WebDriver driver;
 	LoginPage loginPage;
+	ChangePasswordPage changePasswordPage;
+//	LogoutPage logoutPage;
 
 	@BeforeMethod
 
@@ -28,16 +31,21 @@ public class LoginTest {
 		driver.get("https://gateway1.dev.campusops.net/modules/customer/index.html");
 
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
+		changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
+//		logoutPage = PageFactory.initElements(driver, LogoutPage.class);
 
 	}
 
 	@Test
-	public void test() {
-
+	public void loginTest() {
 		loginPage.LogIn_Action("jcarter.dsi", "12345678");
-
 		System.out.println(" Login Successfully, now it is the time to Log Off buddy.");
-
+	}
+	
+	@Test
+	public void changePasswordTest() {
+		ChangePasswordPage.ChangePass_Action("jcarter.dsi", "12345678");
+		System.out.println(" Login Successfully, now it is the time to Log Off buddy.");
 	}
 
 	@AfterMethod
