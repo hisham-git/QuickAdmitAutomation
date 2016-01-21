@@ -3,7 +3,7 @@
 <suite name="QuickAdmit Automation Suite" parallel="none">
   <test name="LoginTest">
     <classes>
-      <class name="testCases.LoginTest"/>
+      <class name="testCases.ActivityTest"/>
     </classes>
   </test> <!-- LoginTest -->
 </suite> <!-- QuickAdmit Automation Suite -->

@@ -1,4 +1,6 @@
 package pageObjects;
+import java.util.Map;
+
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.WebElement;
@@ -27,11 +29,11 @@ public class LoginPage {
 
 // This method will take two arguments ( Username nd Password)
 
-	public void LogIn_Action(String sUserName, String sPassword){
+	public void LogIn_Action(Map<String, String> config){
 
-		txtbx_Login.sendKeys(sUserName);
+		txtbx_Login.sendKeys(config.get("UserName"));
 
-		txtbx_Password.sendKeys(sPassword);
+		txtbx_Password.sendKeys(config.get("Password"));
 
 		btn_Login.click();
 
