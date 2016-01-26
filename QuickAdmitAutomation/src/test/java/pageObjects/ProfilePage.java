@@ -51,7 +51,7 @@ public class ProfilePage {
 	@FindBy(how = How.CSS, using = "input[id^='checkboxEthnicityTypeID_']")
 	public WebElement chkbx_EthnicityType;
 	
-	@FindBy(how = How.CSS, using = "input[id^='checkboxEthnicityType_']")
+	@FindBy(how = How.CSS, using = "input[id='checkboxEthnicityType_1']")
 	public WebElement chkbx_Ethnicity;
 	
 	
@@ -105,24 +105,42 @@ public class ProfilePage {
 
 // This method will take two arguments ( Username nd Password)
 
-	public void AccountCreate_Action(Map<String, String> config){
+	public void selectAction(WebElement locator, String option){
+		Select select = new Select(locator);
+		select.selectByVisibleText(option);
+	}
+	
+	
+	public void profileUpdate_Action(Map<String, String> config){
 		
 		txtbx_Prefix.sendKeys(config.get("Prefix"));
 		txtbx_FirstName.sendKeys(config.get("First Name"));
 		txtbx_MiddleName.sendKeys(config.get("Middle Name"));
 		txtbx_LastName.sendKeys(config.get("Last Name"));
 		txtbx_Suffix.sendKeys(config.get("Suffix"));
-
+		
 		txtbx_Birthday.sendKeys(config.get("Birthday"));
-		Select genderValue = new Select(select_Gender);
-		genderValue.selectByVisibleText("Gender");
+		selectAction(select_Gender, config.get("Gender"));
 		txtbx_GovID.sendKeys(config.get("Gov ID"));
 		
+		chkbx_EthnicityType.click();
+		chkbx_Ethnicity.click();
+		
+		txtbx_AddressLine1.sendKeys(config.get("Address Line 1"));
+		txtbx_AddressLine2.sendKeys(config.get("Address Line 2"));
+		txtbx_AddressLine3.sendKeys(config.get("Address Line 3"));
+		txtbx_City.sendKeys(config.get("City"));
+		selectAction(select_Country, config.get("Country"));
+		selectAction(select_State, config.get("State"));
+		txtbx_PostalCode.sendKeys(config.get("Postal Code"));
+		
+		txtbx_TelephoneNumber.sendKeys(config.get("Telephone Number"));
 		txtbx_EmailAddress.sendKeys(config.get("Email Address"));
 
 		
 		txtbx_SecretQuestion.sendKeys(config.get("Secret Question"));
 		txtbx_SecretAnswer.sendKeys(config.get("Secret Answer"));
+		
 		btn_save.click();
 	}
 
