@@ -39,7 +39,7 @@ public class ActivityTest {
 		
 	//	loginPage = PageFactory.initElements(driver, LoginPage.class);
 	//	changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
-	//	basePage = PageFactory.initElements(driver, BasePage.class);
+		basePage = PageFactory.initElements(driver, BasePage.class);
 
 	}
 
@@ -48,9 +48,10 @@ public class ActivityTest {
 	public void loginTest(Map<String, String> config) throws InterruptedException {
 		driver.get("https://gateway1.dev.campusops.net/modules/customer/index.html");
 		Thread.sleep(5000);
+		loginPage = PageFactory.initElements(driver, LoginPage.class);
 		loginPage.LogIn_Action(config);
 		System.out.println(" Login Successfully, now it is the time to Log Off buddy.");
-		basePage.Logout_Action();
+		
 	}
 	
 	/*@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
@@ -69,7 +70,7 @@ public class ActivityTest {
 		profilePage = PageFactory.initElements(driver, ProfilePage.class);
 		profilePage.profileUpdate_Action(config);
 		System.out.println(" Account updated Successfully");
-	//	basePage.Logout_Action();
+		basePage.Logout_Action();
 	}
 	
 	/*@Test
