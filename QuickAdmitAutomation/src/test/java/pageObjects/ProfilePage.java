@@ -6,11 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProfilePage {
 	final WebDriver driver;
-	
+
 	public ProfilePage(WebDriver driver){
 		this.driver = driver;
 	}
@@ -99,18 +101,57 @@ public class ProfilePage {
 	@FindBy(how = How.CSS, using = "input[value='Save']")
 	public WebElement btn_save ;
 	
-
-// This method will take two arguments ( Username nd Password)
-
+	
 	public void selectAction(WebElement locator, String option){
 		Select select = new Select(locator);
 		select.selectByVisibleText(option);
 	}
 	
+	public void sendKeysAction(WebElement locator, String value){
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.elementToBeClickable(locator)).clear();
+		locator.sendKeys(value);
+	}
+	
+	public void clickAction(WebElement locator){
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+	}
+	
 	
 	public void profileUpdate_Action(Map<String, String> config){
 		
-		txtbx_Prefix.sendKeys(config.get("Prefix"));
+		sendKeysAction(txtbx_Prefix, config.get("Prefix"));
+		sendKeysAction(txtbx_FirstName, config.get("First Name"));
+		sendKeysAction(txtbx_MiddleName, config.get("Middle Name"));
+		sendKeysAction(txtbx_LastName, config.get("Last Name"));
+		sendKeysAction(txtbx_Suffix, config.get("Suffix"));
+		sendKeysAction(txtbx_Birthday, config.get("Birthday"));
+
+		selectAction(select_Gender, config.get("Gender"));
+		
+		sendKeysAction(txtbx_GovID, config.get("Gov ID"));
+		
+		clickAction(chkbx_EthnicityType);
+		clickAction(chkbx_Ethnicity);
+	
+		sendKeysAction(txtbx_AddressLine1, config.get("Address Line 1"));
+		sendKeysAction(txtbx_AddressLine2, config.get("Address Line 2"));
+		sendKeysAction(txtbx_AddressLine3, config.get("Address Line 3"));
+		
+		sendKeysAction(txtbx_City, config.get("City"));
+
+		selectAction(select_Country, config.get("Country"));
+		selectAction(select_State, config.get("State"));
+		
+		sendKeysAction(txtbx_TelephoneNumber, config.get("Telephone Number"));
+		sendKeysAction(txtbx_EmailAddress, config.get("Email Address"));
+		sendKeysAction(txtbx_SecretQuestion, config.get("Secret Question"));
+		sendKeysAction(txtbx_SecretAnswer, config.get("Secret Answer"));
+		
+		clickAction(btn_save);
+		
+		/*txtbx_Prefix.sendKeys(config.get("Prefix"));
 		txtbx_FirstName.sendKeys(config.get("First Name"));
 		txtbx_MiddleName.sendKeys(config.get("Middle Name"));
 		txtbx_LastName.sendKeys(config.get("Last Name"));
@@ -138,7 +179,7 @@ public class ProfilePage {
 		txtbx_SecretQuestion.sendKeys(config.get("Secret Question"));
 		txtbx_SecretAnswer.sendKeys(config.get("Secret Answer"));
 		
-		btn_save.click();
+		btn_save.click();*/
 	}
 
 
