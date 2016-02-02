@@ -1,4 +1,5 @@
 package pageObjects;
+
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
@@ -9,11 +10,10 @@ import org.openqa.selenium.support.FindBy;
 
 import org.openqa.selenium.support.How;
 
-public class LoginPage {
-	final WebDriver driver;
-	
-	public LoginPage(WebDriver driver){
-		this.driver = driver;
+public class LoginPage extends BasePage {
+
+	public LoginPage(WebDriver driver) {
+		super(driver);
 	}
 
 	@FindBy(how = How.ID, using = "focustarget")
@@ -23,21 +23,11 @@ public class LoginPage {
 	public WebElement txtbx_Password;
 
 	@FindBy(how = How.CSS, using = "input[type=\"submit\"]")
-	public WebElement btn_Login ;
+	public WebElement btn_Login;
 
-	
-
-// This method will take two arguments ( Username nd Password)
-
-	public void LogIn_Action(Map<String, String> config){
-
-		txtbx_Login.sendKeys(config.get("UserName"));
-
-		txtbx_Password.sendKeys(config.get("Password"));
-
-		btn_Login.click();
-
+	public void LogIn_Action(Map<String, String> data) {
+		sendKeysAction(txtbx_Login, data.get("UserName"));
+		sendKeysAction(txtbx_Password, data.get("Password"));
+		clickAction(btn_Login);
 	}
-
-
 }

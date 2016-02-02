@@ -32,8 +32,8 @@ public class ActivityTest {
 	public void beforeMethod() {
 
 		driver = BrowserFactory.getBrowser("Firefox");
-
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().window().maximize();
+	//	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		//driver.get("https://gateway1.dev.campusops.net/modules/customer/index.html");
 		
