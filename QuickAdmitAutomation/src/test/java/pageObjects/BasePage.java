@@ -50,7 +50,7 @@ public class BasePage {
 	 */
 
 	public void Logout_Action() {
-		logout_link.click();
+		clickAction(logout_link);
 	}
 
 	public void selectAction(WebElement locator, String option) {

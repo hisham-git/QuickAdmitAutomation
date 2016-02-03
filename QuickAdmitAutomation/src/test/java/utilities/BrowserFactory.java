@@ -25,7 +25,7 @@ public class BrowserFactory {
 		ClassLoader loader = browserFactory.getClass().getClassLoader();
 
 		switch (browserName) {
-		case "Firefox":
+		case "FF":
 			driver = drivers.get("Firefox");
 			if (driver == null) {
 				driver = new FirefoxDriver();

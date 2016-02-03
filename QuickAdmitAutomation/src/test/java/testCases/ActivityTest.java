@@ -34,12 +34,11 @@ public class ActivityTest {
 
 		driver = BrowserFactory.getBrowser("Chrome");
 		driver.manage().window().maximize();
-	//	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
-	//	baseURL = "http://gateway1.dev.campusops.net";
-	//	baseURL = "http://hirebox.jenzabar.com";
-		baseURL = "http://hiredemo.jenzabar.com";
-		
+//		baseURL = "http://gateway1.dev.campusops.net";
+		baseURL = "http://hirebox.jenzabar.com";
+//		baseURL = "http://hiredemo.jenzabar.com";
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 
@@ -54,14 +53,14 @@ public class ActivityTest {
 		
 	}
 	
-	/*@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
-	public void accountCreatonTest(Map<String, String> config) {
-		driver.get("https://gateway1.dev.campusops.net/modules/login/index.html?action=createAccount&URL=https://gateway1.dev.campusops.net/modules/customer/index.html");
+	@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
+	public void accountCreatonTest(Map<String, String> config) throws InterruptedException {
+		driver.get(baseURL + "/modules/login/index.html?action=createAccount&URL=https://gateway1.dev.campusops.net/modules/customer/index.html");
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
 		loginACPage.AccountCreate_Action(config);
 		System.out.println(" Account created Successfully");
 	//	basePage.Logout_Action();
-	}*/
+	}
 	
 	@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
 	public void profileUpdateTest(Map<String, String> config) throws InterruptedException {
@@ -73,11 +72,15 @@ public class ActivityTest {
 		basePage.Logout_Action();
 	}
 	
-	/*@Test
-	public void changePasswordTest() {
-		ChangePasswordPage.ChangePass_Action("jcarter.dsi", "12345678");
-		System.out.println(" Login Successfully, now it is the time to Log Off buddy.");
-	}*/
+	@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
+	public void changePasswordTest(Map<String, String> config) throws InterruptedException {
+		driver.get(baseURL + "/modules/customer/index.html?action=password");
+		Thread.sleep(5000);
+		changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
+		changePasswordPage.ChangePass_Action(config);
+		System.out.println("Password updated Successfully");
+		basePage.Logout_Action();
+	}
 
 	@AfterClass
 	public void afterMethod() {

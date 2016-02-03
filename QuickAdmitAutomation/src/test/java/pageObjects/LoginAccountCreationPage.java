@@ -69,7 +69,7 @@ public class LoginAccountCreationPage extends BasePage {
 		sendKeysAction(txtbx_SecretAnswer, data.get("Secret Answer"));
 
 		clickAction(btn_Create);
-		clickAction(btn_Back);
+//		clickAction(btn_Back);
 	}
 
 }
