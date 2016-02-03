@@ -60,15 +60,21 @@ public class BasePage {
 
 	public void sendKeysAction(WebElement locator, String value) {
 		wait.until(ExpectedConditions.elementToBeClickable(locator));
-		if (locator.isEnabled()) {
+		if (locator.isDisplayed()) {
+		//	locator.clear();
+			locator.sendKeys(value);
+		} else {
+			wait.until(ExpectedConditions.elementToBeClickable(locator));
 			locator.clear();
 			locator.sendKeys(value);
-		}
+		} 
 	}
 
 	public void clickAction(WebElement locator) {
-		wait.until(ExpectedConditions.elementToBeClickable(locator));
-		if (locator.isEnabled()) {
+		if (locator.isDisplayed()) {
+			locator.click();
+		} else {
+			wait.until(ExpectedConditions.elementToBeClickable(locator));
 			locator.click();
 		}
 	}

@@ -20,6 +20,7 @@ import utilities.ExcelFileReaderConfig;
 public class ActivityTest {
 
 	static WebDriver driver;
+	static String baseURL;
 	LoginPage loginPage;
 	ChangePasswordPage changePasswordPage;
 	BasePage basePage;
@@ -29,24 +30,23 @@ public class ActivityTest {
 
 	@BeforeClass
 
-	public void beforeMethod() {
+	public void setUP() {
 
-		driver = BrowserFactory.getBrowser("Firefox");
+		driver = BrowserFactory.getBrowser("Chrome");
 		driver.manage().window().maximize();
 	//	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-		//driver.get("https://gateway1.dev.campusops.net/modules/customer/index.html");
 		
-	//	loginPage = PageFactory.initElements(driver, LoginPage.class);
-	//	changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
+	//	baseURL = "http://gateway1.dev.campusops.net";
+	//	baseURL = "http://hirebox.jenzabar.com";
+		baseURL = "http://hiredemo.jenzabar.com";
+		
 		basePage = PageFactory.initElements(driver, BasePage.class);
-
 	}
 
 
 	@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
 	public void loginTest(Map<String, String> config) throws InterruptedException {
-		driver.get("https://gateway1.dev.campusops.net/modules/customer/index.html");
+		driver.get(baseURL + "/modules/customer/index.html");
 		Thread.sleep(5000);
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
 		loginPage.LogIn_Action(config);
@@ -65,7 +65,7 @@ public class ActivityTest {
 	
 	@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
 	public void profileUpdateTest(Map<String, String> config) throws InterruptedException {
-		driver.get("https://gateway1.dev.campusops.net/modules/customer/index.html?action=profile");
+		driver.get(baseURL + "/modules/customer/index.html?action=profile");
 		Thread.sleep(5000);
 		profilePage = PageFactory.initElements(driver, ProfilePage.class);
 		profilePage.profileUpdate_Action(config);
