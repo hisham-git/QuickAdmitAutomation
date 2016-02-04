@@ -10,7 +10,10 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class BrowserFactory {
 
@@ -28,6 +31,8 @@ public class BrowserFactory {
 		case "FF":
 			driver = drivers.get("Firefox");
 			if (driver == null) {
+				FirefoxProfile profile=new FirefoxProfile();
+				profile.setAcceptUntrustedCertificates(true); //To handle untrusted certificate
 				driver = new FirefoxDriver();
 				drivers.put("Firefox", driver);
 			}
@@ -36,23 +41,25 @@ public class BrowserFactory {
 		case "IE":
 			driver = drivers.get("IE");
 			if (driver == null) {
-
-				// File file = new File("IEDriverServer_win32_v2.48.0.exe");
-				// System.setProperty("webdriver.ie.driver", file.getPath());
-				// System.setProperty("webdriver.ie.driver",
-				// "C:\\Users\\abc\\Desktop\\Server\\IEDriverServer.exe");
-
 				try {
 					File file = new File(loader.getResource(
 							"drivers/IEDriverServer_win32_v2.48.0.exe")
 							.getFile());
 					System.setProperty("webdriver.ie.driver", file.getPath());
+
+					// Create object of DesiredCapabilities class
+					DesiredCapabilities cap = DesiredCapabilities.internetExplorer();
+
+					// Set ACCEPT_SSL_CERTS  variable to true
+					cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true); //To handle untrusted certificate
+
+					// Open browser with capability
+					driver = new InternetExplorerDriver(cap);
+					drivers.put("IE", driver);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-				driver = new InternetExplorerDriver();
-				drivers.put("IE", driver);
 			}
 			break;
 
@@ -63,27 +70,37 @@ public class BrowserFactory {
 				try {
 					File file = new File(loader.getResource(
 							"drivers/chromedriver_win32_v2.20.exe").getFile());
-					System.setProperty("webdriver.chrome.driver",
-							file.getPath());
+					System.setProperty("webdriver.chrome.driver", file.getPath());
+
+					// Create object of DesiredCapabilities class
+					DesiredCapabilities cap = DesiredCapabilities.chrome();
+
+					// Set ACCEPT_SSL_CERTS  variable to true
+					cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true); //To handle untrusted certificate
+
+					// Open browser with capability
+					driver = new ChromeDriver(cap);
+					drivers.put("Chrome", driver);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-				// System.setProperty("webdriver.chrome.driver",
-				// "C:\\Users\\abc\\Desktop\\Server\\ChromeDriver.exe");
-				driver = new ChromeDriver();
-				drivers.put("Chrome", driver);
 			}
+			break;
+		
+		default:
+			System.out.println("Browser name not matches");
 			break;
 		}
 		return driver;
 	}
 
+
 	public static void closeAllDriver() {
 		for (String key : drivers.keySet()) {
 			drivers.get(key).close();
 			drivers.get(key).quit();
+			}
 		}
-	}
-
 }
+

@@ -37,8 +37,8 @@ public class ActivityTest {
 //		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 //		baseURL = "http://gateway1.dev.campusops.net";
-		baseURL = "http://hirebox.jenzabar.com";
-//		baseURL = "http://hiredemo.jenzabar.com";
+//		baseURL = "http://hirebox.jenzabar.com";
+		baseURL = "http://hiredemo.jenzabar.com";
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 
@@ -84,8 +84,8 @@ public class ActivityTest {
 
 	@AfterClass
 	public void afterMethod() {
-
-		driver.close();
+		BrowserFactory.closeAllDriver();
+//		driver.close();
 
 	}
 
