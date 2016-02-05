@@ -38,7 +38,8 @@ public class ActivityTest {
 		
 //		baseURL = "http://gateway1.dev.campusops.net";
 //		baseURL = "http://hirebox.jenzabar.com";
-		baseURL = "http://hiredemo.jenzabar.com";
+//		baseURL = "http://hiredemo.jenzabar.com";
+		baseURL = "http://ec2-52-90-189-131.compute-1.amazonaws.com";
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 
@@ -50,12 +51,13 @@ public class ActivityTest {
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
 		loginPage.LogIn_Action(config);
 		System.out.println(" Login Successfully, now it is the time to Log Off buddy.");
-		
+		basePage.Logout_Action();
 	}
 	
 	@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
 	public void accountCreatonTest(Map<String, String> config) throws InterruptedException {
 		driver.get(baseURL + "/modules/login/index.html?action=createAccount&URL=https://gateway1.dev.campusops.net/modules/customer/index.html");
+		Thread.sleep(5000);
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
 		loginACPage.AccountCreate_Action(config);
 		System.out.println(" Account created Successfully");

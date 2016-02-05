@@ -22,8 +22,11 @@ public class BasePage {
 		// TimeUnit.SECONDS).pollingEvery(2, TimeUnit.SECONDS);
 	}
 
-	@FindBy(how = How.CSS, using = "a[id=\"logout\"]")
+	@FindBy(how = How.CSS, using = "a[id='logout']")
 	public WebElement logout_link;
+	
+	@FindBy(how = How.CSS, using = "li[id='usertarget']")
+	public WebElement login_user;
 
 	/*
 	 * @FindBy(how = How.ID, using = "oldPassword") public WebElement

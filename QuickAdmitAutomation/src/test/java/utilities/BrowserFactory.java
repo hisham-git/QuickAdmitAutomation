@@ -29,7 +29,7 @@ public class BrowserFactory {
 
 		switch (browserName) {
 		case "FF":
-			driver = drivers.get("Firefox");
+			driver = drivers.get("Chrome");
 			if (driver == null) {
 				FirefoxProfile profile=new FirefoxProfile();
 				profile.setAcceptUntrustedCertificates(true); //To handle untrusted certificate
