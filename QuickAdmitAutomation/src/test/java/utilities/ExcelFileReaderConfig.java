@@ -12,7 +12,7 @@ import java.util.*;
 public class ExcelFileReaderConfig {
 
     @DataProvider
-    public static Iterator<Object[]> getAPIConfig(Method callingMethod) throws IOException {
+    public static Iterator<Object[]> getExcelData(Method callingMethod) throws IOException {
         FileInputStream sourceFile = null;
         Workbook workbook = null;
         ExcelFileReaderConfig configKey = new ExcelFileReaderConfig();

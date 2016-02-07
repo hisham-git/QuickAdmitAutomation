@@ -11,9 +11,11 @@ import org.testng.annotations.Test;
 
 import pageObjects.BasePage;
 import pageObjects.ChangePasswordPage;
+import pageObjects.CourseCatalogsPage;
 import pageObjects.LoginAccountCreationPage;
 import pageObjects.LoginPage;
 import pageObjects.ProfilePage;
+import pageObjects.ProgramCatalogsPage;
 import utilities.BrowserFactory;
 import utilities.ExcelFileReaderConfig;
 
@@ -26,6 +28,8 @@ public class ActivityTest {
 	BasePage basePage;
 	LoginAccountCreationPage loginACPage;
 	ProfilePage profilePage;
+	CourseCatalogsPage courseCatalogsPage;
+	ProgramCatalogsPage programCatalogsPage;
 //	LogoutPage logoutPage;
 
 	@BeforeClass
@@ -33,53 +37,61 @@ public class ActivityTest {
 	public void setUP() {
 
 		driver = BrowserFactory.getBrowser("Chrome");
-		driver.manage().window().maximize();
+//		driver.manage().window().maximize();
 //		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 //		baseURL = "http://gateway1.dev.campusops.net";
 //		baseURL = "http://hirebox.jenzabar.com";
-//		baseURL = "http://hiredemo.jenzabar.com";
-		baseURL = "http://ec2-52-90-189-131.compute-1.amazonaws.com";
+		baseURL = "http://hiredemo.jenzabar.com";
+//		baseURL = "http://ec2-52-90-189-131.compute-1.amazonaws.com";
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 
 
-	@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
-	public void loginTest(Map<String, String> config) throws InterruptedException {
+	@Test(dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	public void loginTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html");
 		Thread.sleep(5000);
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
-		loginPage.LogIn_Action(config);
-		System.out.println(" Login Successfully, now it is the time to Log Off buddy.");
-		basePage.Logout_Action();
+		loginPage.LogIn_Action(data);
+		System.out.println(loginPage.getLoginUser() + " Logged in Successfully");
+		Thread.sleep(5000);
+		courseCatalogsPage = PageFactory.initElements(driver, CourseCatalogsPage.class);
+		courseCatalogsPage.getCatalogs();
+		basePage.navigateToProgramCatalogs();
+		Thread.sleep(5000);
+		programCatalogsPage = PageFactory.initElements(driver, ProgramCatalogsPage.class);
+		programCatalogsPage.getCatalogs();
+		programCatalogsPage.Logout_Action();
+		Thread.sleep(5000);
 	}
 	
-	@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
-	public void accountCreatonTest(Map<String, String> config) throws InterruptedException {
+	@Test(dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	public void accountCreatonTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/login/index.html?action=createAccount&URL=https://gateway1.dev.campusops.net/modules/customer/index.html");
 		Thread.sleep(5000);
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
-		loginACPage.AccountCreate_Action(config);
+		loginACPage.AccountCreate_Action(data);
 		System.out.println(" Account created Successfully");
 	//	basePage.Logout_Action();
 	}
 	
-	@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
-	public void profileUpdateTest(Map<String, String> config) throws InterruptedException {
+	@Test(dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	public void profileUpdateTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html?action=profile");
 		Thread.sleep(5000);
 		profilePage = PageFactory.initElements(driver, ProfilePage.class);
-		profilePage.profileUpdate_Action(config);
+		profilePage.profileUpdate_Action(data);
 		System.out.println(" Account updated Successfully");
 		basePage.Logout_Action();
 	}
 	
-	@Test(dataProvider = "getAPIConfig", dataProviderClass = ExcelFileReaderConfig.class)
-	public void changePasswordTest(Map<String, String> config) throws InterruptedException {
+	@Test(dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	public void changePasswordTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html?action=password");
 		Thread.sleep(5000);
 		changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
-		changePasswordPage.ChangePass_Action(config);
+		changePasswordPage.ChangePass_Action(data);
 		System.out.println("Password updated Successfully");
 		basePage.Logout_Action();
 	}
