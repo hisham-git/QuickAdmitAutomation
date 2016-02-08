@@ -5,8 +5,8 @@
     <classes>
       <class name="testCases.ActivityTest"/>
       <methods>
-      		<exclude name="accountCreatonTest" />
-         	<include name="loginTest" />
+      		<include name="accountCreatonTest" />
+         	<exclude name="loginTest" />
             <exclude name="profileUpdateTest" />
       </methods>
     </classes>

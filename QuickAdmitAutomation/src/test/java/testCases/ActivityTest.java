@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -42,8 +43,8 @@ public class ActivityTest {
 		
 //		baseURL = "http://gateway1.dev.campusops.net";
 //		baseURL = "http://hirebox.jenzabar.com";
-//		baseURL = "http://hiredemo.jenzabar.com";
-		baseURL = "http://ec2-54-208-65-58.compute-1.amazonaws.com";
+		baseURL = "http://hiredemo.jenzabar.com";
+//		baseURL = "http://ec2-54-208-65-58.compute-1.amazonaws.com";
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 
@@ -71,8 +72,13 @@ public class ActivityTest {
 		driver.get(baseURL + "/modules/login/index.html?action=createAccount&URL=https://gateway1.dev.campusops.net/modules/customer/index.html");
 		Thread.sleep(5000);
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
-		loginACPage.AccountCreate_Action(data);
-		System.out.println(" Account created Successfully");
+		try {
+			Assert.assertEquals(loginACPage.AccountCreate_Action(data), "Thank you for creating an account. You may now log in!");
+			System.out.println(" Account created Successfully");
+		} catch (Exception e) {
+			System.out.println(" Account creation failed");
+		}
+		
 	//	basePage.Logout_Action();
 	}
 	
