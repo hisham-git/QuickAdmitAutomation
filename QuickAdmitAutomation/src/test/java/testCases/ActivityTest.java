@@ -42,8 +42,8 @@ public class ActivityTest {
 		
 //		baseURL = "http://gateway1.dev.campusops.net";
 //		baseURL = "http://hirebox.jenzabar.com";
-		baseURL = "http://hiredemo.jenzabar.com";
-//		baseURL = "http://ec2-52-90-189-131.compute-1.amazonaws.com";
+//		baseURL = "http://hiredemo.jenzabar.com";
+		baseURL = "http://ec2-54-208-65-58.compute-1.amazonaws.com";
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 
