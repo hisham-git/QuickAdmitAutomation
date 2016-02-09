@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import pageObjects.BasePage;
@@ -34,7 +35,6 @@ public class ActivityTest {
 //	LogoutPage logoutPage;
 
 	@BeforeClass
-
 	public void setUP() {
 
 		driver = BrowserFactory.getBrowser("Chrome");
@@ -43,11 +43,11 @@ public class ActivityTest {
 		
 //		baseURL = "http://gateway1.dev.campusops.net";
 //		baseURL = "http://hirebox.jenzabar.com";
-		baseURL = "http://hiredemo.jenzabar.com";
-//		baseURL = "http://ec2-54-208-65-58.compute-1.amazonaws.com";
+//		baseURL = "http://hiredemo.jenzabar.com";
+		baseURL = "http://ec2-54-86-42-84.compute-1.amazonaws.com";
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
-
+	
 
 	@Test(dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void loginTest(Map<String, String> data) throws InterruptedException {
@@ -63,7 +63,7 @@ public class ActivityTest {
 		Thread.sleep(5000);
 		programCatalogsPage = PageFactory.initElements(driver, ProgramCatalogsPage.class);
 		programCatalogsPage.getCatalogs();
-		programCatalogsPage.Logout_Action();
+	//	programCatalogsPage.Logout_Action();
 		Thread.sleep(5000);
 	}
 	
@@ -74,7 +74,7 @@ public class ActivityTest {
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
 		try {
 			Assert.assertEquals(loginACPage.AccountCreate_Action(data), "Thank you for creating an account. You may now log in!");
-			System.out.println(" Account created Successfully");
+			System.out.println("Account created Successfully");
 		} catch (Exception e) {
 			System.out.println(" Account creation failed");
 		}
@@ -95,10 +95,15 @@ public class ActivityTest {
 	@Test(dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void changePasswordTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html?action=password");
+		basePage.navigateToChangePassword();
 		Thread.sleep(5000);
 		changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
-		changePasswordPage.ChangePass_Action(data);
-		System.out.println("Password updated Successfully");
+		try {
+			Assert.assertEquals(changePasswordPage.ChangePass_Action(data), "You have successfully changed the password.");
+			System.out.println("Password update Successfull");
+		} catch (Exception e) {
+			System.out.println("Password update Failed");
+		}
 		basePage.Logout_Action();
 	}
 

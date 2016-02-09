@@ -34,7 +34,7 @@ public class BasePage {
 	public WebElement login_user;
 	
 	// Find A Course menu & submenu
-	@FindBy(how = How.CSS, using = "a[onmouseover='mopen('m1')']")
+	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(1)>a:nth-child(1)")
 	public WebElement link_FindACourse;
 	
 	@FindBy(how = How.CSS, using = "a[href='index.html?action=courseCatalogs']")
@@ -45,8 +45,7 @@ public class BasePage {
 	
 	
 	// Find A Program menu & submenu
-//	@FindBy(how = How.CSS, using = "a[onmouseover='mopen('m2')']")
-	@FindBy(how = How.XPATH, using = ".//*[@id='sddm']/li[3]/a")
+	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(3)>a:nth-child(1)")
 	public WebElement link_FindAProgram;
 	
 	@FindBy(how = How.CSS, using = "a[href='index.html?action=programCatalogs']")
@@ -57,7 +56,7 @@ public class BasePage {
 	
 	
 	// Academics menu & submenu
-	@FindBy(how = How.CSS, using = "a[onmouseover='mopen('m3')']")
+	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(5)>a:nth-child(1)")
 	public WebElement link_Academics;
 	
 	@FindBy(how = How.CSS, using = "a[href='../customer/index.html?action=programArea']")
@@ -77,7 +76,7 @@ public class BasePage {
 	
 	
 	// Enrollment menu & submenu
-	@FindBy(how = How.CSS, using = "a[onmouseover='mopen('m4')']")
+	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(7)>a:nth-child(1)")
 	public WebElement link_Enrollment;
 		
 	@FindBy(how = How.CSS, using = "a[href='../customer/index.html?action=enrollment']")
@@ -85,7 +84,7 @@ public class BasePage {
 	
 	
 	// My Account menu & submenu
-	@FindBy(how = How.CSS, using = "a[onmouseover='mopen('m5')']")
+	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(9)>a:nth-child(1)")
 	public WebElement link_MyAccount;
 		
 	@FindBy(how = How.CSS, using = "a[href='../customer/index.html?action=profile']")
@@ -105,7 +104,7 @@ public class BasePage {
 	
 	
 	// Cart menu & submenu
-	@FindBy(how = How.CSS, using = "a[onmouseover='mopen('m6')']")
+	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(11)>a:nth-child(1)")
 	public WebElement link_Cart;
 	
 	@FindBy(how = How.CSS, using = "div[id='m6'] + a[href='index.html?action=cart&mode=full']")
@@ -113,20 +112,6 @@ public class BasePage {
 	
 	@FindBy(how = How.CSS, using = "a[href='../customer/checkout.action']")
 	public WebElement link_Checkout;	
-
-
-	/*
-	 * @FindBy(how = How.ID, using = "oldPassword") public WebElement
-	 * txtbx_currentPassword;
-	 * 
-	 * @FindBy(how = How.ID, using = "newPassword") public WebElement
-	 * txtbx_newPassword;
-	 * 
-	 * @FindBy(how = How.ID, using = "newPasswordConfirm") public WebElement
-	 * txtbx_confirmPassword;
-	 * 
-	 * @FindBy(how = How.ID, using = "submitButton") public WebElement btn_go;
-	 */
 
 	/*
 	 * public WebElement fluentWait(final By locator){ Wait<WebDriver> wait =
@@ -139,9 +124,7 @@ public class BasePage {
 	 * driver.findElement(locator); } } ); return foo; }
 	 */
 
-	public void Logout_Action() {
-		clickAction(link_logout);
-	}
+
 	
 	public void navigation(WebElement menu, WebElement submenu){
 		Actions action = new Actions(driver);
@@ -150,6 +133,10 @@ public class BasePage {
 		action.click();
 		action.perform();
 	}
+	
+	/*
+	 * Navigation actions start
+	 * */
 	
 	public void navigateToCourseCatalogs(){
 		navigation(link_FindACourse, link_CourseCatalogs);
@@ -166,6 +153,62 @@ public class BasePage {
 	public void navigateToSearchPrograms(){
 		navigation(link_FindAProgram, link_SearchPrograms);
 	}
+	
+	public void navigateToMyPrograms(){
+		navigation(link_Academics, link_MyPrograms);
+	}
+	
+	public void navigateToCurrentSections(){
+		navigation(link_Academics, link_CurrentSections);
+	}
+	
+	public void navigateToCompletedSections(){
+		navigation(link_Academics, link_CompletedSections);
+	}
+	
+	public void navigateToMySchedule(){
+		navigation(link_Academics, link_MySchedule);
+	}
+	
+	public void navigateToMyCertificates(){
+		navigation(link_Academics, link_MyCertificates);
+	}
+	
+	public void navigateToReservationTicket(){
+		navigation(link_Enrollment, link_ReservationTicket);
+	}
+	
+	public void navigateToUpdateProfile(){
+		navigation(link_MyAccount, link_UpdateProfile);
+	}
+	
+	public void navigateToChangePassword(){
+		navigation(link_MyAccount, link_ChangePassword);
+	}
+	
+	public void navigateToOrderHistory(){
+		navigation(link_MyAccount, link_OrderHistory);
+	}
+	
+	public void navigateToPaymentHistory(){
+		navigation(link_MyAccount, link_PaymentHistory);
+	}
+	
+	public void navigateToPayBalances(){
+		navigation(link_MyAccount, link_PayBalances);
+	}
+	
+	public void navigateToViewCart(){
+		navigation(link_Cart, link_ViewCart);
+	}
+	
+	public void navigateToCheckout(){
+		navigation(link_Cart, link_Checkout);
+	}
+	
+	/*
+	 * End of Navigation actions
+	 * */
 	
 	public void selectAction(WebElement locator, String option) {
 		Select select = new Select(locator);
@@ -200,6 +243,10 @@ public class BasePage {
 			wait.until(ExpectedConditions.visibilityOf(login_user));
 			return (login_user.getText());
 		}
+	}
+	
+	public void Logout_Action() {
+		clickAction(link_logout);
 	}
 
 }
