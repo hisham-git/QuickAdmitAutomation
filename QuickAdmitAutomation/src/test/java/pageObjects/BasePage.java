@@ -247,6 +247,7 @@ public class BasePage {
 	
 	public void Logout_Action() {
 		clickAction(link_logout);
+		wait.until(ExpectedConditions.titleContains("Higher Reach"));
 	}
 
 }

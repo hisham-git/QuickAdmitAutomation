@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 public class ChangePasswordPage extends BasePage {
 
@@ -50,16 +51,35 @@ public class ChangePasswordPage extends BasePage {
 	@FindBy(how = How.ID, using = "submitButton")
 	public WebElement btn_goElement;
 
-	public String ChangePass_Action(Map<String, String> data) {
+	public void ChangePass_Action(Map<String, String> data) {
 		sendKeysAction(txtbx_currentPassword, data.get("Current password"));
 		sendKeysAction(txtbx_newPassword, data.get("New password"));
 		sendKeysAction(txtbx_confirmPassword, data.get("Confirm password"));
 		clickAction(btn_goElement);
 		wait.until(ExpectedConditions.visibilityOf(successtxt_changePassword));
 		if( null != (successtxt_changePassword.getText()) ){
-			return successtxt_changePassword.getText();
-		} else {
-			return null;
+			try {
+				Assert.assertEquals(successtxt_changePassword.getText(), "You have successfully changed the password.");
+				System.out.println("Password update Successfull");
+			} catch (Exception e) {
+				System.out.println("Password update message not matching");
+			}
+			
+		} else if( null != (errtxt_currentPassword.getText()) ) {
+			//This field is required.||Please enter at least 8 characters.
+			
+		} else if( null != (errtxt_newPassword.getText()) ) {
+			
+		} else if( null != (errtxt_confirmPassword.getText()) ) {
+			
+		} else if( null != (errtxt_changePassword.getText()) ) {
+			
+		} 
+		
+		
+		
+		else {
+			System.out.println("Password update Failed");
 		}
 	}
 }

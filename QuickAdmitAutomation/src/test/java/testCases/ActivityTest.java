@@ -43,8 +43,8 @@ public class ActivityTest {
 		
 //		baseURL = "http://gateway1.dev.campusops.net";
 //		baseURL = "http://hirebox.jenzabar.com";
-//		baseURL = "http://hiredemo.jenzabar.com";
-		baseURL = "http://ec2-54-86-42-84.compute-1.amazonaws.com";
+		baseURL = "http://hiredemo.jenzabar.com";
+//		baseURL = "http://ec2-54-86-42-84.compute-1.amazonaws.com";
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 	
@@ -67,7 +67,7 @@ public class ActivityTest {
 		Thread.sleep(5000);
 	}
 	
-	@Test(dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void accountCreatonTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/login/index.html?action=createAccount&URL=https://gateway1.dev.campusops.net/modules/customer/index.html");
 		Thread.sleep(5000);
@@ -82,7 +82,7 @@ public class ActivityTest {
 	//	basePage.Logout_Action();
 	}
 	
-	@Test(dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void profileUpdateTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html?action=profile");
 		Thread.sleep(5000);
@@ -92,23 +92,18 @@ public class ActivityTest {
 		basePage.Logout_Action();
 	}
 	
-	@Test(dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(dependsOnMethods={"loginTest"}, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void changePasswordTest(Map<String, String> data) throws InterruptedException {
-		driver.get(baseURL + "/modules/customer/index.html?action=password");
+	//	driver.get(baseURL + "/modules/customer/index.html?action=password");
 		basePage.navigateToChangePassword();
 		Thread.sleep(5000);
 		changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
-		try {
-			Assert.assertEquals(changePasswordPage.ChangePass_Action(data), "You have successfully changed the password.");
-			System.out.println("Password update Successfull");
-		} catch (Exception e) {
-			System.out.println("Password update Failed");
-		}
-		basePage.Logout_Action();
+		changePasswordPage.ChangePass_Action(data);
 	}
 
 	@AfterClass
 	public void afterMethod() {
+		basePage.Logout_Action();
 		BrowserFactory.closeAllDriver();
 //		driver.close();
 
