@@ -39,7 +39,7 @@ public class ChangePasswordPage extends BasePage {
 	public WebElement errtxt_confirmPassword;
 	
 	
-	//changePassword failed --- Invalid password||Please enter at least 8 characters.
+	//changePassword failed --- Invalid password
 	@FindBy(how = How.CSS, using = "p[id='errorMsg']")
 	public WebElement errtxt_changePassword;
 		
@@ -51,34 +51,65 @@ public class ChangePasswordPage extends BasePage {
 	@FindBy(how = How.ID, using = "submitButton")
 	public WebElement btn_goElement;
 
-	public void ChangePass_Action(Map<String, String> data) {
+	public void ChangePass_Action(Map<String, String> data) throws InterruptedException {
 		sendKeysAction(txtbx_currentPassword, data.get("Current password"));
 		sendKeysAction(txtbx_newPassword, data.get("New password"));
 		sendKeysAction(txtbx_confirmPassword, data.get("Confirm password"));
 		clickAction(btn_goElement);
-		wait.until(ExpectedConditions.visibilityOf(successtxt_changePassword));
-		if( null != (successtxt_changePassword.getText()) ){
+		Thread.sleep(3000);
+//		wait.until(ExpectedConditions.visi(successtxt_changePassword));
+		if( "" != (successtxt_changePassword.getText()) ){
 			try {
 				Assert.assertEquals(successtxt_changePassword.getText(), "You have successfully changed the password.");
-				System.out.println("Password update Successfull");
+				System.out.println("Passed => |" + data.get("Test Case ID") + "| " + data.get("Test Case"));
 			} catch (Exception e) {
 				System.out.println("Password update message not matching");
 			}
 			
-		} else if( null != (errtxt_currentPassword.getText()) ) {
+		} else if( "" != (errtxt_currentPassword.getText()) ) {
 			//This field is required.||Please enter at least 8 characters.
+			if(errtxt_currentPassword.getText().equals("This field is required.")){
+				System.out.println("Passed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));	
+			} else if(errtxt_currentPassword.getText().equals("Please enter at least 8 characters.")){
+				System.out.println("Passed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));	
+			} else {
+				System.out.println("Failed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));
+				System.out.println("Current Password field doesn't have proper Validation Message");
+			}
 			
-		} else if( null != (errtxt_newPassword.getText()) ) {
+		} else if( "" != (errtxt_newPassword.getText()) ) {
+			//This field is required.||Please enter at least 8 characters.
+			if(errtxt_newPassword.getText().equals("This field is required.")){
+				System.out.println("Passed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));	
+			} else if(errtxt_newPassword.getText().equals("Please enter at least 8 characters.")){
+				System.out.println("Passed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));	
+			} else {
+				System.out.println("Failed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));
+				System.out.println("New Password field doesn't have proper Validation Message");
+			}
 			
-		} else if( null != (errtxt_confirmPassword.getText()) ) {
+		} else if( "" != (errtxt_confirmPassword.getText()) ) {
+			//This field is required.||Please enter at least 8 characters.||Confirm password must match the new password.
+			if(errtxt_confirmPassword.getText().equals("This field is required.")){
+				System.out.println("Passed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));	
+			} else if(errtxt_confirmPassword.getText().equals("Please enter at least 8 characters.")){
+				System.out.println("Passed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));	
+			} else if(errtxt_confirmPassword.getText().equals("Confirm password must match the new password.")){
+				System.out.println("Passed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));	
+			} else {
+				System.out.println("Failed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));
+				System.out.println("Confirm Password field doesn't have proper Validation Message");
+			}
 			
-		} else if( null != (errtxt_changePassword.getText()) ) {
-			
-		} 
-		
-		
-		
-		else {
+		} else if( "" != (errtxt_changePassword.getText()) ) {
+			//changePassword failed --- Invalid password
+			if(errtxt_changePassword.getText().equals("changePassword failed --- Invalid password")){
+				System.out.println("Passed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));	
+			} else {
+				System.out.println("Failed => | " + data.get("Test Case ID") + " | " + data.get("Test Case"));
+				System.out.println("Invalid Password Validation Message is missing");
+			}
+		} else {
 			System.out.println("Password update Failed");
 		}
 	}
