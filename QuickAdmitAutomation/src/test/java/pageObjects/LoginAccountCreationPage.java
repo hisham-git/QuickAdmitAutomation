@@ -37,7 +37,10 @@ public class LoginAccountCreationPage extends BasePage {
 	
 	//This field is required.
 	@FindBy(how = How.CSS, using = "input[id='LastNameID'] + span")
-	public WebElement errtxt_LastName;	
+	public WebElement errtxt_LastName;
+	
+	@FindBy(how = How.ID, using = "ERPID")
+	public WebElement txtbx_ERPID;
 	
 	
 	@FindBy(how = How.ID, using = "BirthdayID")
@@ -119,6 +122,8 @@ public class LoginAccountCreationPage extends BasePage {
 		sendKeysAction(txtbx_FirstName, data.get("First Name"));
 		sendKeysAction(txtbx_MiddleName, data.get("Middle Name"));
 		sendKeysAction(txtbx_LastName, data.get("Last Name"));
+		
+		sendKeysAction(txtbx_ERPID, data.get("ERP ID"));
 
 		sendKeysAction(txtbx_Birthday, data.get("Birthday"));
 		sendKeysAction(txtbx_Email, data.get("Email"));
