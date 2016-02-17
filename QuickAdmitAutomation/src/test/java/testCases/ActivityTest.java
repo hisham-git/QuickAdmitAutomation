@@ -38,20 +38,15 @@ public class ActivityTest {
 	@Parameters({ "browserType", "appURL" })
 	@BeforeClass
 	public void setUP(String browserType, String appURL) {
-
 		driver = BrowserFactory.getBrowser(browserType);
+		
 //		driver.manage().window().maximize();
 //		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
-//		baseURL = "http://gateway1.dev.campusops.net";
-//		baseURL = "http://hirebox.jenzabar.com";
-//		baseURL = "http://hiredemo.jenzabar.com";
 		baseURL = appURL;
-//		baseURL = "http://ec2-54-86-42-84.compute-1.amazonaws.com";
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 	
-	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void accountCreatonTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/login/index.html?action=createAccount&URL=https://gateway1.dev.campusops.net/modules/customer/index.html");
 		Thread.sleep(5000);
@@ -66,7 +61,7 @@ public class ActivityTest {
 	//	basePage.Logout_Action();
 	}
 
-	@Test(dependsOnMethods={"accountCreatonTest"}, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void loginTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html");
 		Thread.sleep(5000);
@@ -85,7 +80,7 @@ public class ActivityTest {
 	}
 	
 	
-	@Test(dependsOnMethods={"loginTest"}, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=true, dependsOnMethods={"loginTest"}, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void profileUpdateTest(Map<String, String> data) throws InterruptedException {
 //		driver.get(baseURL + "/modules/customer/index.html?action=profile");
 		basePage.navigateToUpdateProfile();

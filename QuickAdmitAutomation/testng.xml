@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="none">
-<parameter name="appURL" value="http://localhost:9090" />
+<!-- Possible values: 
+http://gateway1.dev.campusops.net||
+http://hirebox.jenzabar.com||
+http://hiredemo.jenzabar.com||
+http://ec2-52-90-32-231.compute-1.amazonaws.com -->
+<parameter name="appURL" value="http://gateway1.dev.campusops.net" />
 <parameter name="browserType" value="FF" />
   <test name="Test" group-by-instances="true">
     <classes>

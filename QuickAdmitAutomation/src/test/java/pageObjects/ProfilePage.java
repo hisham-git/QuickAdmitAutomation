@@ -96,7 +96,10 @@ public class ProfilePage extends BasePage {
 	public WebElement btn_save;
 
 	public void profileUpdate_Action(Map<String, String> data) {
-
+		
+//		wait.until(ExpectedConditions.visibilityOf(select_State));
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("select")));
+		
 		sendKeysAction(txtbx_Prefix, data.get("Prefix"));
 		sendKeysAction(txtbx_FirstName, data.get("First Name"));
 		sendKeysAction(txtbx_MiddleName, data.get("Middle Name"));

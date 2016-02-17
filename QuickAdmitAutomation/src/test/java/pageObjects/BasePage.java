@@ -19,7 +19,7 @@ public class BasePage {
 
 	public BasePage(WebDriver driver) {
 		this.driver = driver;
-		this.wait = new WebDriverWait(driver, 10);
+		this.wait = new WebDriverWait(driver, 30);
 		// this.wait = new FluentWait(driver).withTimeout(30,
 		// TimeUnit.SECONDS).pollingEvery(2, TimeUnit.SECONDS);
 	}
@@ -218,7 +218,7 @@ public class BasePage {
 	public void sendKeysAction(WebElement locator, String value) {
 		wait.until(ExpectedConditions.elementToBeClickable(locator));
 		if (locator.isDisplayed()) {
-		//	locator.clear();
+			locator.clear();
 			locator.sendKeys(value);
 		} else {
 			wait.until(ExpectedConditions.elementToBeClickable(locator));
