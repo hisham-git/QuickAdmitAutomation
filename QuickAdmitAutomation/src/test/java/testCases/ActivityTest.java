@@ -46,22 +46,22 @@ public class ActivityTest {
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 	
-	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void accountCreatonTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/login/index.html?action=createAccount&URL=https://gateway1.dev.campusops.net/modules/customer/index.html");
 		Thread.sleep(5000);
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
 		try {
 			Assert.assertEquals(loginACPage.AccountCreate_Action(data), "Thank you for creating an account. You may now log in!");
-			System.out.println("Account created Successfully");
+			System.out.println("Account Creation Successfull for user: " + data.get("First Name") + " " + data.get("Last Name"));
 		} catch (Exception e) {
-			System.out.println(" Account creation failed");
+			System.out.println("Account Creation Failed for user: " + data.get("First Name") + " " + data.get("Last Name"));
 		}
 		
 	//	basePage.Logout_Action();
 	}
 
-	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=true, dependsOnMethods={"accountCreatonTest"}, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void loginTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html");
 		Thread.sleep(5000);
