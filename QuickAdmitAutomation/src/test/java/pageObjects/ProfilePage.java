@@ -94,11 +94,12 @@ public class ProfilePage extends BasePage {
 
 	@FindBy(how = How.CSS, using = "input[value='Save']")
 	public WebElement btn_save;
+	
 
 	public void profileUpdate_Action(Map<String, String> data) {
 		
 //		wait.until(ExpectedConditions.visibilityOf(select_State));
-		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("select")));
+//		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("select")));
 		
 		sendKeysAction(txtbx_Prefix, data.get("Prefix"));
 		sendKeysAction(txtbx_FirstName, data.get("First Name"));

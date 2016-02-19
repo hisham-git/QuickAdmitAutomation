@@ -3,11 +3,13 @@ package pageObjects;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -123,8 +125,6 @@ public class BasePage {
 	 * public WebElement apply(WebDriver driver) { return
 	 * driver.findElement(locator); } } ); return foo; }
 	 */
-
-
 	
 	public void navigation(WebElement menu, WebElement submenu){
 		Actions action = new Actions(driver);
@@ -134,12 +134,25 @@ public class BasePage {
 		action.perform();
 	}
 	
+		
+	void waitForLoad(WebDriver driver) {
+	    ExpectedCondition<Boolean> pageLoadCondition = new
+	        ExpectedCondition<Boolean>() {
+	            public Boolean apply(WebDriver driver) {
+	                return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
+	            }
+	        };
+	    wait.until(pageLoadCondition);
+	}
+
+	
 	/*
 	 * Navigation actions start
 	 * */
 	
 	public void navigateToCourseCatalogs(){
 		navigation(link_FindACourse, link_CourseCatalogs);
+		waitForLoad(driver);
 	}
 	
 	public void navigateToSearchCourses(){
@@ -148,6 +161,7 @@ public class BasePage {
 	
 	public void navigateToProgramCatalogs(){
 		navigation(link_FindAProgram, link_ProgramCatalogs);
+		waitForLoad(driver);
 	}
 	
 	public void navigateToSearchPrograms(){
@@ -180,10 +194,12 @@ public class BasePage {
 	
 	public void navigateToUpdateProfile(){
 		navigation(link_MyAccount, link_UpdateProfile);
+		waitForLoad(driver);
 	}
 	
 	public void navigateToChangePassword(){
 		navigation(link_MyAccount, link_ChangePassword);
+		waitForLoad(driver);
 	}
 	
 	public void navigateToOrderHistory(){
@@ -216,7 +232,7 @@ public class BasePage {
 	}
 
 	public void sendKeysAction(WebElement locator, String value) {
-		wait.until(ExpectedConditions.elementToBeClickable(locator));
+		/*wait.until(ExpectedConditions.elementToBeClickable(locator));
 		if (locator.isDisplayed()) {
 			locator.clear();
 			locator.sendKeys(value);
@@ -224,7 +240,11 @@ public class BasePage {
 			wait.until(ExpectedConditions.elementToBeClickable(locator));
 			locator.clear();
 			locator.sendKeys(value);
-		} 
+		}*/
+		
+		wait.until(ExpectedConditions.elementToBeClickable(locator));
+		locator.clear();
+		locator.sendKeys(value);
 	}
 
 	public void clickAction(WebElement locator) {
