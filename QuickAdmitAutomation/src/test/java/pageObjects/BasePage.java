@@ -143,6 +143,7 @@ public class BasePage {
 	            }
 	        };
 	    wait.until(pageLoadCondition);
+	    System.out.println("Wait successfull");
 	}
 
 	
@@ -244,6 +245,7 @@ public class BasePage {
 		
 		wait.until(ExpectedConditions.elementToBeClickable(locator));
 		locator.clear();
+		locator.click();
 		locator.sendKeys(value);
 	}
 

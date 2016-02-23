@@ -16,6 +16,10 @@ public class LoginAccountCreationPage extends BasePage {
 	public LoginAccountCreationPage(WebDriver driver) {
 		super(driver);
 	}
+	
+	
+	@FindBy(how = How.ID, using = "ERPID")
+	public WebElement txtbx_ERPID;
 
 	@FindBy(how = How.ID, using = "FirstNameID")
 	public WebElement txtbx_FirstName;
@@ -38,11 +42,7 @@ public class LoginAccountCreationPage extends BasePage {
 	//This field is required.
 	@FindBy(how = How.CSS, using = "input[id='LastNameID'] + span")
 	public WebElement errtxt_LastName;
-	
-	@FindBy(how = How.ID, using = "ERPID")
-	public WebElement txtbx_ERPID;
-	
-	
+
 	@FindBy(how = How.ID, using = "BirthdayID")
 	public WebElement txtbx_Birthday;
 	
@@ -118,12 +118,12 @@ public class LoginAccountCreationPage extends BasePage {
 	
 
 	public String AccountCreate_Action(Map<String, String> data) {
+		
+		sendKeysAction(txtbx_ERPID, data.get("ERP ID"));
 
 		sendKeysAction(txtbx_FirstName, data.get("First Name"));
 		sendKeysAction(txtbx_MiddleName, data.get("Middle Name"));
 		sendKeysAction(txtbx_LastName, data.get("Last Name"));
-		
-//		sendKeysAction(txtbx_ERPID, data.get("ERP ID"));
 
 		sendKeysAction(txtbx_Birthday, data.get("Birthday"));
 		sendKeysAction(txtbx_Email, data.get("Email"));

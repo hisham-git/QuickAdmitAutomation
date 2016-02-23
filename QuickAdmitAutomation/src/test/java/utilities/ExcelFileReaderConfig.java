@@ -72,7 +72,8 @@ public class ExcelFileReaderConfig {
             case Cell.CELL_TYPE_NUMERIC:
                 return formatter.formatCellValue(cell);
             case Cell.CELL_TYPE_BLANK:
-                return "";
+            	return formatter.formatCellValue(cell);
+//            	return "";
             default:
                 return "";
 
