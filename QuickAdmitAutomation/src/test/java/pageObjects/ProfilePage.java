@@ -15,7 +15,12 @@ public class ProfilePage extends BasePage {
 
 	public ProfilePage(WebDriver driver) {
 		super(driver);
+		wait.until(ExpectedConditions.titleContains("Profile"));
+		System.out.println("Profile wait complete");
 	}
+	
+	@FindBy(how = How.CSS, using = "input[id='ERPID']")
+	public WebElement txtbx_ERPID;
 
 	@FindBy(how = How.CSS, using = "input[id^='prefixNameID_']")
 	public WebElement txtbx_Prefix;
@@ -96,10 +101,12 @@ public class ProfilePage extends BasePage {
 	public WebElement btn_save;
 	
 
-	public void profileUpdate_Action(Map<String, String> data) {
+	public void profileUpdate_Action(Map<String, String> data) throws InterruptedException {
 		
 //		wait.until(ExpectedConditions.visibilityOf(select_State));
 //		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("select")));
+		
+		Thread.sleep(10000);
 		
 		sendKeysAction(txtbx_Prefix, data.get("Prefix"));
 		sendKeysAction(txtbx_FirstName, data.get("First Name"));

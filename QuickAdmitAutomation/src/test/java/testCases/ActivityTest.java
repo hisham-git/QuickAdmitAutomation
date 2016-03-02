@@ -48,8 +48,8 @@ public class ActivityTest {
 	
 	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void accountCreatonTest(Map<String, String> data) throws InterruptedException {
-		driver.get(baseURL + "/modules/login/index.html?action=createAccount&URL=https://gateway1.dev.campusops.net/modules/customer/index.html");
-		Thread.sleep(5000);
+		driver.get(baseURL + "/modules/login/index.html?action=createAccount");
+//		Thread.sleep(5000);
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
 		try {
 			Assert.assertEquals(loginACPage.AccountCreate_Action(data), "Thank you for creating an account. You may now log in!");
@@ -88,7 +88,7 @@ public class ActivityTest {
 		profilePage = PageFactory.initElements(driver, ProfilePage.class);
 		profilePage.profileUpdate_Action(data);
 		System.out.println(" Account updated Successfully");
-		basePage.Logout_Action();
+//		basePage.Logout_Action();
 	}
 	
 	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
@@ -101,8 +101,8 @@ public class ActivityTest {
 	}
 
 	@AfterClass
-	public void afterMethod() {
-		basePage.Logout_Action();
+	public void shutDown() {
+//		basePage.Logout_Action();
 		BrowserFactory.closeAllDriver();
 //		driver.close();
 

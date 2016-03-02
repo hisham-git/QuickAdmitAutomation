@@ -15,6 +15,8 @@ public class LoginAccountCreationPage extends BasePage {
 
 	public LoginAccountCreationPage(WebDriver driver) {
 		super(driver);
+		wait.until(ExpectedConditions.titleContains("Login Account Creation"));
+		System.out.println("LoginAccountCreationPage wait complete");
 	}
 	
 	
