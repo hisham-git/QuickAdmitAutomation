@@ -1,5 +1,7 @@
 package pageObjects;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -113,8 +115,27 @@ public class BasePage {
 	public WebElement link_ViewCart;
 	
 	@FindBy(how = How.CSS, using = "a[href='../customer/checkout.action']")
-	public WebElement link_Checkout;	
-
+	public WebElement link_Checkout;
+	
+	// missing ERP ID info
+	@FindBy(how = How.CSS, using = "div[id='erpRequiredMessageBlock'] > span")
+	public WebElement info_ERPID;
+	
+	// Info for Holds
+	@FindBy(how = How.CSS, using = "div[id='displayHoldMessageBlock'] > span")
+	public WebElement info_Hold;
+	
+	@FindBy(how = How.CSS, using = "#displayHoldMessageBlock > span > #popUpLink")
+	public WebElement click_info_Hold;
+	
+	// Hold Lists
+	@FindBy(how = How.CSS, using = "ul[id='holdNames']")
+	public List<WebElement> HoldNames = new ArrayList<WebElement>();
+	
+	@FindBy(how = How.CSS, using = "span[class='disabled_menu_tooltip']")
+	public WebElement disabled_menu_tooltip;
+	
+	
 	/*
 	 * public WebElement fluentWait(final By locator){ Wait<WebDriver> wait =
 	 * new FluentWait<WebDriver>(driver) .withTimeout(30, TimeUnit.SECONDS)
@@ -129,9 +150,16 @@ public class BasePage {
 	public void navigation(WebElement menu, WebElement submenu){
 		Actions action = new Actions(driver);
 		action.moveToElement(menu).perform();
-		action.moveToElement(submenu);
-		action.click();
-		action.perform();
+		if(submenu.isEnabled()){
+			action.moveToElement(submenu);
+			action.click();
+			action.perform();
+		} else {
+			action.moveToElement(submenu);
+			wait.until(ExpectedConditions.visibilityOf(disabled_menu_tooltip));
+			System.out.println("Submenu Enabled: " + submenu.isEnabled());
+			disabled_menu_tooltip.getText();
+		}	
 	}
 	
 		
@@ -256,6 +284,33 @@ public class BasePage {
 			wait.until(ExpectedConditions.elementToBeClickable(locator));
 			locator.click();
 		}
+	}
+	
+	public void getInfo(){
+		if ( ("") != (info_ERPID.getText()) ){
+			System.out.println("Info Message for Student without ERPID shown below:");
+			System.out.println(info_ERPID.getText());
+			System.out.println();
+		} else {
+			System.out.println("Student has ERPID. Info Message not shown");
+		}
+		
+		if ( ("") != (info_Hold.getText()) ){
+			System.out.println("Info Message for Student with Holds shown below:");
+			System.out.println(info_Hold.getText());
+			System.out.println();
+			
+			click_info_Hold.click();
+			System.out.println("Hold Names: ");
+			
+			for (WebElement holdNames : HoldNames) {
+				System.out.println(holdNames.getText());
+			}
+			
+		} else {
+			System.out.println("Student doesn't have Hold. Info Message not shown");
+		}
+		
 	}
 	
 	public String getLoginUser() {

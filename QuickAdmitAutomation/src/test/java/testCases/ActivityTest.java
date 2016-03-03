@@ -40,13 +40,13 @@ public class ActivityTest {
 	public void setUP(String browserType, String appURL) {
 		driver = BrowserFactory.getBrowser(browserType);
 		
-//		driver.manage().window().maximize();
+		driver.manage().window().maximize();
 //		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		baseURL = appURL;
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 	
-	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void accountCreatonTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/login/index.html?action=createAccount");
 //		Thread.sleep(5000);
@@ -61,7 +61,7 @@ public class ActivityTest {
 	//	basePage.Logout_Action();
 	}
 
-	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void loginTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html");
 		Thread.sleep(5000);
@@ -69,6 +69,7 @@ public class ActivityTest {
 		loginPage.LogIn_Action(data);
 		System.out.println(loginPage.getLoginUser() + " Logged in Successfully");
 		Thread.sleep(5000);
+
 		courseCatalogsPage = PageFactory.initElements(driver, CourseCatalogsPage.class);
 		courseCatalogsPage.getCatalogs();
 		basePage.navigateToProgramCatalogs();
@@ -79,6 +80,11 @@ public class ActivityTest {
 		Thread.sleep(5000);
 	}
 	
+	@Test(enabled=true, dependsOnMethods={"loginTest"})
+	public void navigationTest(){
+		basePage.navigateToCurrentSections();
+		basePage.navigateToPayBalances();
+	}
 	
 	@Test(enabled=false, dependsOnMethods={"loginTest"}, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void profileUpdateTest(Map<String, String> data) throws InterruptedException {

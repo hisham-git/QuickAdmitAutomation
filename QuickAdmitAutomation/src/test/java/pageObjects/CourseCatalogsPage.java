@@ -29,6 +29,8 @@ public class CourseCatalogsPage extends BasePage {
 	@FindBy(how = How.CSS, using = "#catalogTarget a[onclick^='forwardToCourseBrowse']")
 	public List<WebElement> catalog_links = new ArrayList<WebElement>();
 	
+	
+	
 	public void getCatalogs() throws InterruptedException{
 		clickAction(catalog_list);
 		wait.until(ExpectedConditions.visibilityOfAllElements(catalog_links));
@@ -38,6 +40,9 @@ public class CourseCatalogsPage extends BasePage {
 		for (WebElement catalog : catalog_links) {
 			System.out.println(catalog.getText());
 		}
+		
+		System.out.println();
+		getInfo();
 		System.out.println();
 	}
 
