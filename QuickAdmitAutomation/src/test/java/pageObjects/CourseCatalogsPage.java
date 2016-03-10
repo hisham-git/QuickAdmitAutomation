@@ -42,7 +42,7 @@ public class CourseCatalogsPage extends BasePage {
 		}
 		
 		System.out.println();
-		getInfo();
+//		getInfo();
 		System.out.println();
 	}
 

@@ -9,6 +9,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -39,6 +40,7 @@ public class BasePage {
 	
 	// Find A Course menu & submenu
 	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(1)>a:nth-child(1)")
+	@CacheLookup
 	public WebElement link_FindACourse;
 	
 	@FindBy(how = How.CSS, using = "a[href='index.html?action=courseCatalogs']")
@@ -50,6 +52,7 @@ public class BasePage {
 	
 	// Find A Program menu & submenu
 	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(3)>a:nth-child(1)")
+	@CacheLookup
 	public WebElement link_FindAProgram;
 	
 	@FindBy(how = How.CSS, using = "a[href='index.html?action=programCatalogs']")
@@ -61,6 +64,7 @@ public class BasePage {
 	
 	// Academics menu & submenu
 	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(5)>a:nth-child(1)")
+	@CacheLookup
 	public WebElement link_Academics;
 	
 	@FindBy(how = How.CSS, using = "a[href='../customer/index.html?action=programArea']")
@@ -81,6 +85,7 @@ public class BasePage {
 	
 	// Enrollment menu & submenu
 	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(7)>a:nth-child(1)")
+	@CacheLookup
 	public WebElement link_Enrollment;
 		
 	@FindBy(how = How.CSS, using = "a[href='../customer/index.html?action=enrollment']")
@@ -89,6 +94,7 @@ public class BasePage {
 	
 	// My Account menu & submenu
 	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(9)>a:nth-child(1)")
+	@CacheLookup
 	public WebElement link_MyAccount;
 		
 	@FindBy(how = How.CSS, using = "a[href='../customer/index.html?action=profile']")
@@ -109,6 +115,7 @@ public class BasePage {
 	
 	// Cart menu & submenu
 	@FindBy(how = How.CSS, using = "ul[id='sddm']>li:nth-child(11)>a:nth-child(1)")
+	@CacheLookup
 	public WebElement link_Cart;
 	
 	@FindBy(how = How.CSS, using = "div[id='m6'] + a[href='index.html?action=cart&mode=full']")
@@ -171,7 +178,7 @@ public class BasePage {
 	            }
 	        };
 	    wait.until(pageLoadCondition);
-	    System.out.println("Wait successfull");
+	    System.out.println(driver.getTitle() + " => Page load complete");
 	}
 
 	

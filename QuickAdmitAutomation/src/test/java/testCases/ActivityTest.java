@@ -46,22 +46,16 @@ public class ActivityTest {
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 	
-	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void accountCreatonTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/login/index.html?action=createAccount");
 //		Thread.sleep(5000);
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
-		try {
-			Assert.assertEquals(loginACPage.AccountCreate_Action(data), "Thank you for creating an account. You may now log in!");
-			System.out.println("Account Creation Successfull for user: " + data.get("First Name") + " " + data.get("Last Name"));
-		} catch (Exception e) {
-			System.out.println("Account Creation Failed for user: " + data.get("First Name") + " " + data.get("Last Name"));
-		}
-		
+		loginACPage.AccountCreate_Action(data);
 	//	basePage.Logout_Action();
 	}
 
-	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void loginTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html");
 		Thread.sleep(5000);
@@ -76,11 +70,14 @@ public class ActivityTest {
 		Thread.sleep(5000);
 		programCatalogsPage = PageFactory.initElements(driver, ProgramCatalogsPage.class);
 		programCatalogsPage.getCatalogs();
+		
+		basePage.navigateToUpdateProfile();
+		
 	//	programCatalogsPage.Logout_Action();
 		Thread.sleep(5000);
 	}
 	
-	@Test(enabled=true, dependsOnMethods={"loginTest"})
+	@Test(enabled=false, dependsOnMethods={"loginTest"})
 	public void navigationTest(){
 		basePage.navigateToCurrentSections();
 		basePage.navigateToPayBalances();

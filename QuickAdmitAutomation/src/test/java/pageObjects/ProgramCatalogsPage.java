@@ -37,7 +37,7 @@ public class ProgramCatalogsPage extends BasePage {
 			System.out.println(catalog.getText());
 		}
 		System.out.println();
-		getInfo();
+//		getInfo();
 		System.out.println();
 	}
 	
