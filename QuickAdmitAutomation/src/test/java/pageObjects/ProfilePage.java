@@ -103,10 +103,8 @@ public class ProfilePage extends BasePage {
 
 	public void profileUpdate_Action(Map<String, String> data) throws InterruptedException {
 		
-//		wait.until(ExpectedConditions.visibilityOf(select_State));
+		wait.until(ExpectedConditions.elementToBeSelected(select_State));
 //		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("select")));
-		
-		Thread.sleep(10000);
 		
 		sendKeysAction(txtbx_Prefix, data.get("Prefix"));
 		sendKeysAction(txtbx_FirstName, data.get("First Name"));

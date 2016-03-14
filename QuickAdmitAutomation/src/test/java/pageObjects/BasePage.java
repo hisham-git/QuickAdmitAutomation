@@ -3,6 +3,7 @@ package pageObjects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,19 +15,24 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.google.common.base.Function;
 
 public class BasePage {
 	final WebDriver driver;
 	final WebDriverWait wait;
-	// final Wait<FluentWait> wait;
+	final FluentWait<WebDriver> fwait;
 
 	public BasePage(WebDriver driver) {
 		this.driver = driver;
 		this.wait = new WebDriverWait(driver, 30);
-		// this.wait = new FluentWait(driver).withTimeout(30,
-		// TimeUnit.SECONDS).pollingEvery(2, TimeUnit.SECONDS);
+		
+		this.fwait = new FluentWait<WebDriver>(driver);
+		this.fwait.pollingEvery(250, TimeUnit.MILLISECONDS);
+		this.fwait.withTimeout(5, TimeUnit.SECONDS);
 	}
 
 	@FindBy(how = How.CSS, using = "a[id='logout']")
@@ -161,7 +167,7 @@ public class BasePage {
 			action.moveToElement(submenu);
 			action.click();
 			action.perform();
-		} else {
+		} else {												// To get hold menu tooltips
 			action.moveToElement(submenu);
 			wait.until(ExpectedConditions.visibilityOf(disabled_menu_tooltip));
 			System.out.println("Submenu Enabled: " + submenu.isEnabled());
@@ -170,7 +176,7 @@ public class BasePage {
 	}
 	
 		
-	void waitForLoad(WebDriver driver) {
+	/*void waitForLoad(WebDriver driver) {
 	    ExpectedCondition<Boolean> pageLoadCondition = new
 	        ExpectedCondition<Boolean>() {
 	            public Boolean apply(WebDriver driver) {
@@ -178,6 +184,21 @@ public class BasePage {
 	            }
 	        };
 	    wait.until(pageLoadCondition);
+	    System.out.println(driver.getTitle() + " => Page load complete");
+	}*/
+	
+	void waitForLoad(WebDriver driver) {
+		Function<WebDriver, Boolean> pageLoadCondition = new Function<WebDriver, Boolean>() {
+	            public Boolean apply(WebDriver driver) {
+	            	if ( ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete") ) {
+	            		return true;
+	            	} 
+	            	return false;
+	            }
+	        };
+	    fwait.until(pageLoadCondition);
+		String script = ((JavascriptExecutor)driver).executeScript("return document.title").toString();
+		System.out.println("Script running : " + script);
 	    System.out.println(driver.getTitle() + " => Page load complete");
 	}
 
@@ -278,7 +299,7 @@ public class BasePage {
 			locator.sendKeys(value);
 		}*/
 		
-		wait.until(ExpectedConditions.elementToBeClickable(locator));
+//		wait.until(ExpectedConditions.elementToBeClickable(locator));
 		locator.clear();
 		locator.click();
 		locator.sendKeys(value);
