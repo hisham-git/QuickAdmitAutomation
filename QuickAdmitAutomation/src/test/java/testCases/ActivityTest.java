@@ -22,6 +22,10 @@ import pageObjects.ProgramCatalogsPage;
 import utilities.BrowserFactory;
 import utilities.ExcelFileReaderConfig;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+
 public class ActivityTest {
 
 	static WebDriver driver;
@@ -33,11 +37,15 @@ public class ActivityTest {
 	ProfilePage profilePage;
 	CourseCatalogsPage courseCatalogsPage;
 	ProgramCatalogsPage programCatalogsPage;
+	static final Logger logger = LogManager.getLogger(ActivityTest.class.getName());
 //	LogoutPage logoutPage;
 
 	@Parameters({ "browserType", "appURL" })
 	@BeforeClass
 	public void setUP(String browserType, String appURL) {
+		DOMConfigurator.configure("log4j.xml");
+	    logger.info("# # # # # # # # # # # # # # # # # # # # # # # # # # # ");
+	    logger.info("TEST Has Started");
 		driver = BrowserFactory.getBrowser(browserType);
 		
 		driver.manage().window().maximize();
@@ -52,6 +60,7 @@ public class ActivityTest {
 //		Thread.sleep(5000);
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
 		loginACPage.AccountCreate_Action(data);
+		logger.info(" Account Creation Successfull ");
 	//	basePage.Logout_Action();
 	}
 
