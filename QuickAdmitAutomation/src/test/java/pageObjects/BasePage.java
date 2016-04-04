@@ -163,16 +163,16 @@ public class BasePage {
 	public void navigation(WebElement menu, WebElement submenu){
 		Actions action = new Actions(driver);
 		action.moveToElement(menu).perform();
-		if(submenu.isEnabled()){
-			action.moveToElement(submenu);
+		action.moveToElement(submenu);
+		if( submenu.getAttribute("class").equalsIgnoreCase("disable_a_href") ){
+			System.out.println(submenu.getText() + " is Disabled");
+			wait.until(ExpectedConditions.visibilityOf(disabled_menu_tooltip));
+			System.out.println(disabled_menu_tooltip.getText());
+		} else {
+			System.out.println(submenu.getText() + " is Enabled");
 			action.click();
 			action.perform();
-		} else {												// To get hold menu tooltips
-			action.moveToElement(submenu);
-			wait.until(ExpectedConditions.visibilityOf(disabled_menu_tooltip));
-			System.out.println("Submenu Enabled: " + submenu.isEnabled());
-			disabled_menu_tooltip.getText();
-		}	
+		}
 	}
 	
 		

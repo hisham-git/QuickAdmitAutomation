@@ -21,7 +21,10 @@ import pageObjects.ProfilePage;
 import pageObjects.ProgramCatalogsPage;
 import utilities.BrowserFactory;
 import utilities.ExcelFileReaderConfig;
+import utilities.Log;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
@@ -37,34 +40,43 @@ public class ActivityTest {
 	ProfilePage profilePage;
 	CourseCatalogsPage courseCatalogsPage;
 	ProgramCatalogsPage programCatalogsPage;
-	static final Logger logger = LogManager.getLogger(ActivityTest.class.getName());
+//	static final Logger logger = LogManager.getLogger(ActivityTest.class.getName());
 //	LogoutPage logoutPage;
 
 	@Parameters({ "browserType", "appURL" })
 	@BeforeClass
 	public void setUP(String browserType, String appURL) {
 		DOMConfigurator.configure("log4j.xml");
-	    logger.info("# # # # # # # # # # # # # # # # # # # # # # # # # # # ");
-	    logger.info("TEST Has Started");
+//		BasicConfigurator.configure();
+		
+/*		//Create a console appender and attach it to our mainLogger
+		ConsoleAppender appender = new ConsoleAppender();
+		logger.addAppender(appender);
+		appender.activateOptions(); //activateOptions() will activate the options set previously. 
+*/
 		driver = BrowserFactory.getBrowser(browserType);
 		
-		driver.manage().window().maximize();
+//		driver.manage().window().maximize();
 //		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		baseURL = appURL;
 		basePage = PageFactory.initElements(driver, BasePage.class);
 	}
 	
-	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void accountCreatonTest(Map<String, String> data) throws InterruptedException {
+		Thread.sleep(5000);
 		driver.get(baseURL + "/modules/login/index.html?action=createAccount");
+		Log.startTestCase(data.get("Test Case ID"));
+		Log.info("Create Account URL launched");
 //		Thread.sleep(5000);
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
 		loginACPage.AccountCreate_Action(data);
-		logger.info(" Account Creation Successfull ");
+		Log.info(" Account Creation Successfull ");
+		Log.endTestCase(data.get("Test Case ID"));
 	//	basePage.Logout_Action();
 	}
 
-	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=false, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void loginTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html");
 		Thread.sleep(5000);
@@ -89,7 +101,7 @@ public class ActivityTest {
 		basePage.navigateToPayBalances();
 	}
 	
-	@Test(enabled=true, dependsOnMethods={"loginTest"}, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
+	@Test(enabled=false, dependsOnMethods={"loginTest"}, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void profileUpdateTest(Map<String, String> data) throws InterruptedException {
 //		driver.get(baseURL + "/modules/customer/index.html?action=profile");
 		basePage.navigateToUpdateProfile();

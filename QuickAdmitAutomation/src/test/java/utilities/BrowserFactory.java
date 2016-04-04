@@ -29,11 +29,12 @@ public class BrowserFactory {
 
 		switch (browserName) {
 		case "FF":
-			driver = drivers.get("Chrome");
+			driver = drivers.get("FF");
 			if (driver == null) {
 				FirefoxProfile profile=new FirefoxProfile();
 				profile.setAcceptUntrustedCertificates(true); //To handle untrusted certificate
 				driver = new FirefoxDriver();
+				Log.info("Firefox browser launched...");
 				drivers.put("Firefox", driver);
 			}
 			break;
@@ -55,10 +56,11 @@ public class BrowserFactory {
 
 					// Open browser with capability
 					driver = new InternetExplorerDriver(cap);
+					Log.info("IE browser launched...");
 					drivers.put("IE", driver);
 
 				} catch (Exception e) {
-					e.printStackTrace();
+					Log.error("Caused following exception while launching IE: " + e);
 				}
 			}
 			break;
@@ -80,16 +82,17 @@ public class BrowserFactory {
 
 					// Open browser with capability
 					driver = new ChromeDriver(cap);
+					Log.info("Chrome browser launched...");
 					drivers.put("Chrome", driver);
 
 				} catch (Exception e) {
-					e.printStackTrace();
+					Log.error("Caused following exception while launching Chrome: " + e);
 				}
 			}
 			break;
-		
+
 		default:
-			System.out.println("Browser name not matches");
+			Log.error("Browser name not matches");
 			break;
 		}
 		return driver;
@@ -100,7 +103,8 @@ public class BrowserFactory {
 		for (String key : drivers.keySet()) {
 			drivers.get(key).close();
 			drivers.get(key).quit();
-			}
+			Log.info("Browser Closed");
 		}
+	}
 }
 
