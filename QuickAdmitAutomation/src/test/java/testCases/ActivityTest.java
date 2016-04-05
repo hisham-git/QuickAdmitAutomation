@@ -116,8 +116,6 @@ public class ActivityTest {
 	public void shutDown() {
 //		basePage.Logout_Action();
 		BrowserFactory.closeAllDriver();
-//		driver.close();
-
 	}
 
 }

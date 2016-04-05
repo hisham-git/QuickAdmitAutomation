@@ -8,7 +8,7 @@ http://hiredemo.jenzabar.com||
 http://ec2-52-90-32-231.compute-1.amazonaws.com
 -->
 <parameter name="appURL" value="http://hiredemo.jenzabar.com" />
-<parameter name="browserType" value="Chrome" />
+<parameter name="browserType" value="FF" />
   <test name="Test" group-by-instances="true">
     <classes>
       <class name="testCases.ActivityTest" />
