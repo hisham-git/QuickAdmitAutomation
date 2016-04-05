@@ -34,8 +34,8 @@ public class BrowserFactory {
 				FirefoxProfile profile=new FirefoxProfile();
 				profile.setAcceptUntrustedCertificates(true); //To handle untrusted certificate
 				driver = new FirefoxDriver();
-				Log.info("Firefox browser launched...");
 				drivers.put("Firefox", driver);
+				Log.info(drivers.keySet().toString() + " browser Launched...");
 			}
 			break;
 
@@ -56,8 +56,8 @@ public class BrowserFactory {
 
 					// Open browser with capability
 					driver = new InternetExplorerDriver(cap);
-					Log.info("IE browser launched...");
 					drivers.put("IE", driver);
+					Log.info(drivers.keySet().toString() + " browser Launched...");
 
 				} catch (Exception e) {
 					Log.error("Caused following exception while launching IE: " + e);
@@ -82,8 +82,8 @@ public class BrowserFactory {
 
 					// Open browser with capability
 					driver = new ChromeDriver(cap);
-					Log.info("Chrome browser launched...");
 					drivers.put("Chrome", driver);
+					Log.info(drivers.keySet().toString() + " browser Launched...");
 
 				} catch (Exception e) {
 					Log.error("Caused following exception while launching Chrome: " + e);
@@ -103,7 +103,7 @@ public class BrowserFactory {
 		for (String key : drivers.keySet()) {
 			drivers.get(key).close();
 			drivers.get(key).quit();
-			Log.info("Browser Closed");
+			Log.info(drivers.keySet().toString() + " browser Closed");
 		}
 	}
 }

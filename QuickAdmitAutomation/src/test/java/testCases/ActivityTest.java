@@ -40,7 +40,6 @@ public class ActivityTest {
 	ProfilePage profilePage;
 	CourseCatalogsPage courseCatalogsPage;
 	ProgramCatalogsPage programCatalogsPage;
-//	static final Logger logger = LogManager.getLogger(ActivityTest.class.getName());
 //	LogoutPage logoutPage;
 
 	@Parameters({ "browserType", "appURL" })
@@ -48,14 +47,8 @@ public class ActivityTest {
 	public void setUP(String browserType, String appURL) {
 		DOMConfigurator.configure("log4j.xml");
 //		BasicConfigurator.configure();
-		
-/*		//Create a console appender and attach it to our mainLogger
-		ConsoleAppender appender = new ConsoleAppender();
-		logger.addAppender(appender);
-		appender.activateOptions(); //activateOptions() will activate the options set previously. 
-*/
+	
 		driver = BrowserFactory.getBrowser(browserType);
-		
 //		driver.manage().window().maximize();
 //		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		baseURL = appURL;
@@ -67,11 +60,9 @@ public class ActivityTest {
 		Thread.sleep(5000);
 		driver.get(baseURL + "/modules/login/index.html?action=createAccount");
 		Log.startTestCase(data.get("Test Case ID"));
-		Log.info("Create Account URL launched");
-//		Thread.sleep(5000);
+		Log.info("Navigating to Create Account URL");
 		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
 		loginACPage.AccountCreate_Action(data);
-		Log.info(" Account Creation Successfull ");
 		Log.endTestCase(data.get("Test Case ID"));
 	//	basePage.Logout_Action();
 	}

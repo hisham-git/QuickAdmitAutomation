@@ -19,6 +19,10 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import utilities.Log;
+
+import utilities.Log;
+
 import com.google.common.base.Function;
 
 public class BasePage {
@@ -32,7 +36,7 @@ public class BasePage {
 		
 		this.fwait = new FluentWait<WebDriver>(driver);
 		this.fwait.pollingEvery(250, TimeUnit.MILLISECONDS);
-		this.fwait.withTimeout(5, TimeUnit.SECONDS);
+		this.fwait.withTimeout(10, TimeUnit.SECONDS);
 	}
 
 	@FindBy(how = How.CSS, using = "a[id='logout']")
@@ -165,11 +169,11 @@ public class BasePage {
 		action.moveToElement(menu).perform();
 		action.moveToElement(submenu);
 		if( submenu.getAttribute("class").equalsIgnoreCase("disable_a_href") ){
-			System.out.println(submenu.getText() + " is Disabled");
+			Log.info(submenu.getText() + " is Disabled");
 			wait.until(ExpectedConditions.visibilityOf(disabled_menu_tooltip));
-			System.out.println(disabled_menu_tooltip.getText());
+			Log.info(disabled_menu_tooltip.getText());
 		} else {
-			System.out.println(submenu.getText() + " is Enabled");
+			Log.info(submenu.getText() + " is Enabled");
 			action.click();
 			action.perform();
 		}
@@ -198,8 +202,8 @@ public class BasePage {
 	        };
 	    fwait.until(pageLoadCondition);
 		String script = ((JavascriptExecutor)driver).executeScript("return document.title").toString();
-		System.out.println("Script running : " + script);
-	    System.out.println(driver.getTitle() + " => Page load complete");
+		Log.info("Script running : " + script);
+		Log.info(driver.getTitle() + " => Page load complete");
 	}
 
 	
@@ -286,6 +290,7 @@ public class BasePage {
 	public void selectAction(WebElement locator, String option) {
 		Select select = new Select(locator);
 		select.selectByVisibleText(option);
+		Log.info(option + " selected");
 	}
 
 	public void sendKeysAction(WebElement locator, String value) {
@@ -303,40 +308,41 @@ public class BasePage {
 		locator.clear();
 		locator.click();
 		locator.sendKeys(value);
+		Log.info("Typing " + value + " complete");
 	}
 
 	public void clickAction(WebElement locator) {
 		if (locator.isDisplayed()) {
 			locator.click();
+			Log.info("Clicking " + locator.getAttribute("value") + " button complete");
 		} else {
 			wait.until(ExpectedConditions.elementToBeClickable(locator));
 			locator.click();
+			Log.info("Clicking " + locator.getAttribute("value") + " button complete");
 		}
 	}
 	
 	public void getInfo(){
 		if ( ("") != (info_ERPID.getText()) ){
-			System.out.println("Info Message for Student without ERPID shown below:");
-			System.out.println(info_ERPID.getText());
-			System.out.println();
+			Log.info("Info Message for Student without ERPID shown below:");
+			Log.info(info_ERPID.getText());
 		} else {
-			System.out.println("Student has ERPID. Info Message not shown");
+			Log.info("Student has ERPID. Info Message not shown");
 		}
 		
 		if ( ("") != (info_Hold.getText()) ){
-			System.out.println("Info Message for Student with Holds shown below:");
-			System.out.println(info_Hold.getText());
-			System.out.println();
+			Log.info("Info Message for Student with Holds shown below:");
+			Log.info(info_Hold.getText());
 			
 			click_info_Hold.click();
-			System.out.println("Hold Names: ");
+			Log.info("Hold Names: ");
 			
 			for (WebElement holdNames : HoldNames) {
-				System.out.println(holdNames.getText());
+				Log.info(holdNames.getText());
 			}
 			
 		} else {
-			System.out.println("Student doesn't have Hold. Info Message not shown");
+			Log.info("Student doesn't have Hold. Info Message not shown");
 		}
 		
 	}
