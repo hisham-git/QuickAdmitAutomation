@@ -1,14 +1,11 @@
 package testCases;
 
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -22,12 +19,6 @@ import pageObjects.ProgramCatalogsPage;
 import utilities.BrowserFactory;
 import utilities.ExcelFileReaderConfig;
 import utilities.Log;
-
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 
 public class ActivityTest {
 
@@ -45,7 +36,7 @@ public class ActivityTest {
 	@Parameters({ "browserType", "appURL" })
 	@BeforeClass
 	public void setUP(String browserType, String appURL) {
-		DOMConfigurator.configure("log4j.xml");
+//		DOMConfigurator.configure("log4j.xml");
 //		BasicConfigurator.configure();
 	
 		driver = BrowserFactory.getBrowser(browserType);
