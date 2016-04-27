@@ -123,7 +123,8 @@ public class LoginAccountCreationPage extends BasePage {
 	public void AccountCreate_Action(Map<String, String> data) throws InterruptedException, NoSuchElementException {
 		
 //		sendKeysAction(txtbx_ERPID, data.get("ERP ID"));
-
+		waitForLoad(driver);
+		
 		sendKeysAction(txtbx_FirstName, data.get("First Name"));
 		sendKeysAction(txtbx_MiddleName, data.get("Middle Name"));
 		sendKeysAction(txtbx_LastName, data.get("Last Name"));

@@ -211,6 +211,8 @@ public class BasePage {
 	 * Navigation actions start
 	 * */
 	
+	
+	
 	public void navigateToCourseCatalogs(){
 		navigation(link_FindACourse, link_CourseCatalogs);
 		waitForLoad(driver);
@@ -314,11 +316,11 @@ public class BasePage {
 	public void clickAction(WebElement locator) {
 		if (locator.isDisplayed()) {
 			locator.click();
-			Log.info("Clicking " + locator.getAttribute("value") + " button complete");
+			Log.info("Clicking " + locator.getAttribute("value") + " complete");
 		} else {
 			wait.until(ExpectedConditions.elementToBeClickable(locator));
 			locator.click();
-			Log.info("Clicking " + locator.getAttribute("value") + " button complete");
+			Log.info("Clicking " + locator.getAttribute("value") + " complete");
 		}
 	}
 	

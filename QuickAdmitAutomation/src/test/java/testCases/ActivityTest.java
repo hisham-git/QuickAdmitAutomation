@@ -12,8 +12,9 @@ import org.testng.annotations.Test;
 import pageObjects.BasePage;
 import pageObjects.ChangePasswordPage;
 import pageObjects.CourseCatalogsPage;
+import pageObjects.HomePage;
 import pageObjects.LoginAccountCreationPage;
-import pageObjects.LoginPage;
+import pageObjects.CustomerLoginPage;
 import pageObjects.ProfilePage;
 import pageObjects.ProgramCatalogsPage;
 import utilities.BrowserFactory;
@@ -24,18 +25,19 @@ public class ActivityTest {
 
 	static WebDriver driver;
 	static String baseURL;
-	LoginPage loginPage;
+	CustomerLoginPage customerLoginPage;
 	ChangePasswordPage changePasswordPage;
 	BasePage basePage;
 	LoginAccountCreationPage loginACPage;
 	ProfilePage profilePage;
 	CourseCatalogsPage courseCatalogsPage;
 	ProgramCatalogsPage programCatalogsPage;
+	HomePage homePage;
 //	LogoutPage logoutPage;
 
 	@Parameters({ "browserType", "appURL" })
 	@BeforeClass
-	public void setUP(String browserType, String appURL) {
+	public void setUP(String browserType, String appURL) throws InterruptedException {
 //		DOMConfigurator.configure("log4j.xml");
 //		BasicConfigurator.configure();
 	
@@ -48,11 +50,16 @@ public class ActivityTest {
 	
 	@Test(enabled=true, dataProvider = "getExcelData", dataProviderClass = ExcelFileReaderConfig.class)
 	public void accountCreatonTest(Map<String, String> data) throws InterruptedException {
-		Thread.sleep(5000);
-		driver.get(baseURL + "/modules/login/index.html?action=createAccount");
+		
+		driver.get(baseURL + "/modules/index.html");
+		homePage = PageFactory.initElements(driver, HomePage.class);
+		courseCatalogsPage = homePage.BrowseStudentView_Action();
+		
+		loginACPage = courseCatalogsPage.navigateToAccountCreation();
+		
 		Log.startTestCase(data.get("Test Case ID"));
 		Log.info("Navigating to Create Account URL");
-		loginACPage = PageFactory.initElements(driver, LoginAccountCreationPage.class);
+
 		loginACPage.AccountCreate_Action(data);
 		Log.endTestCase(data.get("Test Case ID"));
 	//	basePage.Logout_Action();
@@ -62,9 +69,9 @@ public class ActivityTest {
 	public void loginTest(Map<String, String> data) throws InterruptedException {
 		driver.get(baseURL + "/modules/customer/index.html");
 		Thread.sleep(5000);
-		loginPage = PageFactory.initElements(driver, LoginPage.class);
-		loginPage.LogIn_Action(data);
-		System.out.println(loginPage.getLoginUser() + " Logged in Successfully");
+		customerLoginPage = PageFactory.initElements(driver, CustomerLoginPage.class);
+		customerLoginPage.LogIn_Action(data);
+		System.out.println(customerLoginPage.getLoginUser() + " Logged in Successfully");
 		Thread.sleep(5000);
 
 		courseCatalogsPage = PageFactory.initElements(driver, CourseCatalogsPage.class);

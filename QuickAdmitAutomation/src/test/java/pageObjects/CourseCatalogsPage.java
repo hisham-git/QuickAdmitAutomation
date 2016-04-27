@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CourseCatalogsPage extends BasePage {
@@ -39,6 +40,13 @@ public class CourseCatalogsPage extends BasePage {
 		System.out.println();
 //		getInfo();
 		System.out.println();
+	}
+	
+	public LoginAccountCreationPage navigateToAccountCreation(){
+//		navigateToCourseCatalogs();
+		clickAction(link_login);
+		waitForLoad(driver);
+		return PageFactory.initElements(driver, LoginAccountCreationPage.class);
 	}
 
 	/*public void LogIn_Action(Map<String, String> data) {

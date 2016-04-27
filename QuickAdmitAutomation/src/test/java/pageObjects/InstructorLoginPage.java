@@ -10,9 +10,9 @@ import org.openqa.selenium.support.FindBy;
 
 import org.openqa.selenium.support.How;
 
-public class LoginPage extends BasePage {
+public class InstructorLoginPage extends BasePage {
 
-	public LoginPage(WebDriver driver) {
+	public InstructorLoginPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -24,10 +24,17 @@ public class LoginPage extends BasePage {
 
 	@FindBy(how = How.CSS, using = "input[type=\"submit\"]")
 	public WebElement btn_Login;
+	
+	@FindBy(how = How.CSS, using = "a[href='../login/forgotPassword.html']")
+	public WebElement link_forgotPassword;
 
-	public void LogIn_Action(Map<String, String> data) {
+	public void InstructorLogIn_Action(Map<String, String> data) {
 		sendKeysAction(txtbx_Login, data.get("UserName"));
 		sendKeysAction(txtbx_Password, data.get("Password"));
 		clickAction(btn_Login);
+	}
+	
+	public void ForgotPassword_Action() {
+		clickAction(link_forgotPassword);
 	}
 }
